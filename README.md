@@ -1,0 +1,35 @@
+# Rezeptkartei
+
+Eine minimalistische Web-App fürs iPhone (installierbar über „Zum Home-Bildschirm“):
+
+- **Rezept einfügen** – Text von einer Webseite (z. B. Chefkoch) kopieren, „Text einfügen & erkennen“ tippen. Titel, Beschreibung, Zeiten, Portionen, Schwierigkeitsgrad, Zutaten, Anleitung und Tipps werden automatisch erkannt.
+- **Automatisches Layout** – jedes Rezept wird im Kochkartei-Layout gesetzt (DIN A5 quer, Arial, Zutaten links, Anleitung rechts), nachgebaut nach der InDesign-Vorlage. Passt es nicht ganz, wird die Schrift leicht verkleinert; ist es lang, läuft es automatisch auf die Rückseite weiter.
+- **Sparsam drucken** – je zwei Karten kommen übereinander auf ein A4-Blatt (hochkant). Zweiseitige Karten werden zusammen gruppiert, die Rückseiten werden passend für doppelseitigen Druck angeordnet. Danach in der Mitte durchschneiden.
+- **Karteikasten** – Suche über Titel, Zutaten und Text, Filter nach Stichwörtern und „Ungedruckt“.
+- **PDF-Import** – vorhandene Kochkartei-PDFs aus InDesign einlesen (auch mehrere auf einmal, je zwei Karten pro A4-Seite); alle Felder werden übernommen, das Original bleibt am Rezept gespeichert. Andere PDFs werden so gut wie möglich erkannt. PDFs, die mit der App erstellt wurden, enthalten die Rezeptdaten und werden 1:1 wieder eingelesen.
+- **Backup / Teilen** – alle Rezepte als Datei exportieren und z. B. per AirDrop auf das andere iPhone übertragen (wird zusammengeführt).
+
+Alles läuft lokal im Browser, es gibt keinen Server und kein Konto. Die Rezepte liegen auf dem jeweiligen Gerät.
+
+## Installation auf dem iPhone
+
+1. Die App ist über **GitHub Pages** erreichbar: https://6v965td9sj-max.github.io/rezeptkartei/
+   (Repository → Settings → Pages → „Deploy from a branch“, Branch `main`, Ordner `/ (root)`).
+2. Die Adresse in **Safari** öffnen → Teilen-Symbol → **„Zum Home-Bildschirm“**.
+3. Ab dann startet sie wie eine normale App und funktioniert auch offline.
+
+## Drucken
+
+1. „Drucken“ → Rezepte auswählen (standardmäßig alle ungedruckten) → „Druckbogen erstellen“.
+2. „Teilen / Drucken“ → im iOS-Menü „Drucken“ → **Doppelseitig** einschalten.
+3. Beim ersten Mal unter Einstellungen den **Testbogen** drucken und prüfen, ob die Rückseiten richtig stehen. Falls nicht, „oben/unten tauschen“ bzw. „um 180° drehen“ anpassen.
+
+## Eigenes Layout
+
+Das Aussehen der Karte steht komplett in `js/layout.js` im Objekt `LAYOUT`; alle Maße (mm) sind aus der InDesign-Vorlage ausgemessen. Statt Arial wird im PDF Helvetica verwendet (gleiche Zeichenbreiten). Eigene Schriften können als TTF-Dateien in `fonts/` abgelegt und unter `customFonts` eingetragen werden.
+
+Nach Änderungen in `sw.js` die `VERSION` erhöhen, damit installierte Apps das Update laden.
+
+## Technik
+
+Reines HTML/CSS/JavaScript ohne Build-Schritt. Mitgeliefert in `vendor/`: [jsPDF](https://github.com/parallax/jsPDF) 2.5.2 (PDF-Erzeugung) und [PDF.js](https://github.com/mozilla/pdf.js) 3.11.174 (Vorschau und Import). Lokal testen: `python3 -m http.server` in diesem Ordner und `http://localhost:8000` öffnen.
