@@ -1,5 +1,5 @@
 // Offline-Cache. Bei jeder Änderung an der App VERSION erhöhen.
-const VERSION = 'v2';
+const VERSION = 'v3';
 const FILES = [
   './',
   'index.html',
@@ -14,6 +14,7 @@ const FILES = [
   'vendor/pdf.min.js',
   'vendor/pdf.worker.min.js',
   'icons/icon-192.png',
+  'icons/favicon.png',
   'icons/apple-touch-icon.png',
 ];
 

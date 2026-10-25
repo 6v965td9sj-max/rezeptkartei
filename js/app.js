@@ -29,6 +29,29 @@ function h(tag, attrs = {}, ...children) {
   return el;
 }
 
+// Einstellungen-Symbol: drei Linien mit Reglern, im Strich der Karten
+function settingsIcon() {
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('width', '22');
+  svg.setAttribute('height', '22');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '1.5');
+  for (const [y, x] of [[6, 15], [12, 8], [18, 13]]) {
+    const line = document.createElementNS(ns, 'path');
+    line.setAttribute('d', `M3 ${y}H21`);
+    const knob = document.createElementNS(ns, 'circle');
+    knob.setAttribute('cx', x);
+    knob.setAttribute('cy', y);
+    knob.setAttribute('r', '2.2');
+    knob.setAttribute('fill', 'var(--bg)');
+    svg.append(line, knob);
+  }
+  return svg;
+}
+
 let toastTimer;
 function toast(msg) {
   const t = document.getElementById('toast');
@@ -167,7 +190,7 @@ function renderList() {
     header('Rezeptkartei', {
       actions: [
         h('button', { class: 'secondary', onclick: () => (location.hash = '#/print') }, 'Drucken'),
-        h('button', { class: 'ghost', 'aria-label': 'Einstellungen', onclick: () => (location.hash = '#/settings') }, '⚙︎'),
+        h('button', { class: 'ghost', 'aria-label': 'Einstellungen', onclick: () => (location.hash = '#/settings') }, settingsIcon()),
       ],
     }),
     h('div', { style: 'margin-bottom:10px' }, search),
@@ -584,7 +607,7 @@ function renderSettings() {
       h('h2', {}, 'Doppelseitiger Druck'),
       toggle('swapSlots', 'Rückseiten oben/unten tauschen', 'Aus = Wenden an der langen Kante (Standard beim iPhone)'),
       toggle('rotateBack', 'Rückseiten um 180° drehen', 'Einschalten, falls die Rückseiten auf dem Kopf stehen'),
-      toggle('cutMarks', 'Schnittmarken', 'Kleine Striche oben und unten in der Mitte'),
+      toggle('cutMarks', 'Schnittmarken', 'Kleine Striche links und rechts, wo geschnitten wird'),
       h('div', { class: 'row', style: 'margin-top:8px' },
         h('button', { class: 'secondary', onclick: () => shareFile(duplexTestPdf(s).output('blob'), 'Duplex-Test.pdf') }, 'Testbogen drucken'),
       ),
